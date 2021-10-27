@@ -1,0 +1,63 @@
+/* Created by Fei Shan */
+
+/*div {*/
+/*  border: 1px solid;*/
+/*}*/
+
+/*body div.col-sm-6 {*/
+/*    background-color: darkseagreen;*/
+/*}*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body div#full-height {
+    display: flex;
+    flex-direction: column;
+    max-width: 992px;
+}
+
+body header {
+    margin-bottom: 0.5rem;
+}
+
+body div#flex-content {
+    flex: 1 1 auto;
+}
+
+nav.navbar {
+    padding-bottom: 0;
+}
+
+div.row {
+    margin: 0 0 20px 0;
+}
+
+div.row>div {
+    padding-left: 0;
+}
+
+div#problem-detail {
+    height: 100px;
+}
+
+div#annotation button.btn {
+    margin: 0 0 5px 0;
+    /*border: 0;*/
+}
+
+footer {
+    height: 40px;
+    text-align: center;
+    color: lightslategray;
+}
+
+
