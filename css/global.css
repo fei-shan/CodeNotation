@@ -45,8 +45,39 @@ div.row>div {
     padding-left: 0;
 }
 
+h6 {
+    color: darkgreen;
+}
+
+/*div#annotation button#9 {*/
+/*    background-color: lightseagreen!important;*/
+/*    border: lightseagreen!important;*/
+/*}*/
+
+/*div#annotation button#0 {*/
+/*    background-color: lightsalmon!important;*/
+/*    border: lightsalmon!important;*/
+/*}*/
+
+div#instruction {
+    padding: 2px 8px 2px 8px;
+}
+
+div#instruction p {
+    font-family: "Times New Roman", Times, serif;
+    color: dimgray;
+}
+
+textarea#code {
+    white-space: pre-wrap;
+}
+
 div#problem-detail {
     height: 100px;
+}
+
+div#editor-field form {
+    height: 85%;
 }
 
 div#annotation button.btn {
@@ -54,10 +85,25 @@ div#annotation button.btn {
     /*border: 0;*/
 }
 
+#problem-detail, #code, #output {
+    padding: 2px 8px 2px 8px;
+    font-family: Arial;
+    font-size: medium;
+}
+
 footer {
     height: 40px;
     text-align: center;
     color: lightslategray;
+}
+
+.notransition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
+    transform: translateZ(0) !important; /*Force reflow*/
 }
 
 

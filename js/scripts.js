@@ -53,11 +53,23 @@ const annotations = [
     }
 ];
 
+var annotation_time_total = 40;
+var annotation_time_left = annotation_time_total;
+
 $(document).ready(function (){
     displayAnnotation();
-    monitorSelection();
+    getSelection();
+    startCountdown();
     makeAnnotation();
+    closeToast();
+    keyboardOverride();
 });
+
+function closeToast() {
+    $("#toast-content .btn-close").click(function (){
+        $("#toast-content #toast").hide();
+    })
+}
 
 // Style each annotation button
 function styleAnnotation(a) {
@@ -84,33 +96,107 @@ function displayAnnotation() {
 }
 
 // Get selected text
-let selection = "";
+var selection = "";
 function getSelection() {
     selection = document.getSelection();
-    // if (selection.toString() !== "") {
-    //     console.log(selection.toString());
-    // }
 }
 
 // Monitor text selection
-function monitorSelection() {
-    $(document).mouseup(getSelection);
+// function monitorSelection() {
+//     $("div#annotation button").mouseup(getSelection);
+// }
+
+// Start countdown once
+var reset_time = false;
+function startCountdown () {
+    $("textarea#code").one("focus", function (event) { // Start countdown
+        $("div#countdown-timer div.progress-bar") // Reset to full width, then start counting down again.
+            .width("100%")
+            .attr("aria-valuenow", 100).hide().show(0, true, function () {
+                reset_time = false
+            countdown(annotation_time_left, annotation_time_total);
+        });
+    })
+}
+
+// Handle button click and keyboard shortcut
+function handleAnnotation(a) {
+    console.log({"thought": a.text(), "content":selection.toString()});
+
+    // Display toast
+    $("#toast-content .toast-body").text(a.text()
+        + ": " + selection.toString());
+    $("#toast-content #toast").show().delay(1000).fadeOut();
+
+    // Timer reset
+    reset_time = true;
+    $("div#countdown-timer div.progress-bar").stop(true, true); // Stop animation
 }
 
 // Make annotation of text selection
 function makeAnnotation() {
-    $("div#annotation button").click(function() {
-        console.log({"thought": $(this).text(), "focus":selection.toString()});
-        // let color = $(this).css("background-color");
-        // let span = document.createElement("span");
-        // selection.getRangeAt(0).surroundContents(span);
+    $("div#annotation button").click(function(event) {
+        event.stopPropagation();
+        // Get corresponding annotation button
+        let a = $(this);
+        handleAnnotation(a);
+    });
+}
+
+function countdown(left, total) { // Recursive count in seconds
+    if (reset_time) { // Reset to full
+        // $("div#countdown-timer div.progress-bar")
+        //     .addClass(".notransition");
+        $("div#countdown-timer div.progress-bar") // Reset to full width, then start counting down again.
+            .width("100%")
+            .attr("aria-valuenow", 100).hide().show(0, true, function () {
+                reset_time = false
+                countdown(total, total);
+        });
+    } else if (left > 0) {
+        let width = left / total;
+        $("div#countdown-timer div.progress-bar")
+            .width(width * $("div#countdown-timer").width())
+            // .animate({ width: width * $("div#countdown-timer").width()}, 200)
+            .attr('aria-valuenow', Math.floor(100 * width));
+            // .html(Math.floor(left/60) + ":"+ left%60);
+        setTimeout(function() { // Update every 0.5 second
+            countdown(left - 0.1, total);
+        }, 100);
+    } else {
+        alert("Please make an annotation to continue");
+        // Restart countdown when the editor is focused
+        startCountdown();
+    }
+}
+
+function range(start, stop, step=1) {
+    return new Array((stop - start)/step).fill(start).map((d, i) => step * i + start);
+}
+
+function keyboardOverride() {
+    // Tab support for code editor
+    $("textarea#code").tabby();
+
+    // Keyboard annotation short cut
+    $(document).keypress(function(event) {
+        let key_codes = range(48, 58); // key 0 to key 9
+        if((event.metaKey || event.ctrlKey)
+            && key_codes.includes(event.keyCode)) {
+            event.preventDefault();
+            // Get corresponding annotation button
+            let a = $("div#annotation button#" + key_codes.indexOf(event.keyCode));
+            handleAnnotation(a);
+        }
     });
 }
 
 // Submit skulpt code
 function outf(text) {
-    let output = document.getElementById("output");
-    output.innerHTML = output.innerHTML + text;
+    // let output = document.getElementById("output");
+    // output.innerHTML = output.innerHTML + text;
+    let output = $("pre#output");
+    output.html(output.html() + text);
 }
 
 
@@ -122,9 +208,12 @@ function builtinRead(x) {
 
 // Run the code in editor
 function runPythonCode() {
-    let code = document.getElementById("code").value;
-    let output = document.getElementById("output");
-    output.innerHTML = '';
+    // let code = document.getElementById("code").value;
+    // let output = document.getElementById("output");
+    // output.innerHTML = '';
+    let code = $("textarea#code").val();
+    let output = $("pre#output");
+    output.html("");
     Sk.pre = "output";
     Sk.configure({output:outf, read:builtinRead});
     (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
