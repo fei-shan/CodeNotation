@@ -128,12 +128,15 @@ function handleAnnotation(a) {
         + ": " + selection.toString());
     $("#toast-content #toast").show().delay(1000).fadeOut();
 
+    // Textarea remove readonly
+    $("textarea#code").attr("readonly", false);
     // Timer reset
     reset_time = true;
-    $("div#countdown-timer div.progress-bar").stop(true, true); // Stop animation
+    // Stop animation for instant resetting
+    $("div#countdown-timer div.progress-bar").stop(true, true);
 }
 
-// Make annotation of text selection
+// Make annotation with button click
 function makeAnnotation() {
     $("div#annotation button").click(function(event) {
         event.stopPropagation();
@@ -165,6 +168,7 @@ function countdown(left, total) { // Recursive count in seconds
         }, 100);
     } else {
         alert("Please make an annotation to continue");
+        $("textarea#code").attr("readonly", true);
         // Restart countdown when the editor is focused
         startCountdown();
     }
