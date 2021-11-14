@@ -1,3 +1,6 @@
+const KEYBOARD_SHORTCUT_ENABLED = true;
+const PYTHON_ERROR_MESSAGE_DISPLAY = true;
+
 const annotations = [
     {
         "id": 1,
@@ -43,13 +46,11 @@ const annotations = [
         "id": 9,
         "thought": "Feeling good",
         "class": "btn btn-success w-50",
-        "color": "LightSeaGreen",
     },
     {
         "id": 0,
         "thought": "Feeling bad",
         "class": "btn btn-success w-50",
-        "color": "LightSalmon",
     }
 ];
 
@@ -72,26 +73,26 @@ function closeToast() {
 }
 
 // Style each annotation button
-function styleAnnotation(a) {
-    $("div#annotation #" + a.id).css({
-        "background-color": a.color,
-        "border": a.color,
-    }).hover( function () {
-        $(this).css({
-            "background-color": a.color,
-            "border": a.color,
-        })
-    });
-}
+// function styleAnnotation(a) {
+//     $("div#annotation #" + a.id).css({
+//         "background-color": a.color,
+//         "border": a.color,
+//     }).hover( function () {
+//         $(this).css({
+//             "background-color": a.color,
+//             "border": a.color,
+//         })
+//     });
+// }
 
 // Display annotation button options.
 function displayAnnotation() {
     for (const a of annotations) {
-        $("#annotation").append("<button id=\""+ a.id +
+        $("#annotation").append("<button id=\"anno"+ a.id +
                 "\" class = \"" + a.class + "\">" +
             a.id + ". " + a.thought +
             "</button>");
-        styleAnnotation(a);
+        // styleAnnotation(a);
     }
 }
 
@@ -182,6 +183,8 @@ function keyboardOverride() {
     // Tab support for code editor
     $("textarea#code").tabby();
 
+    if (!KEYBOARD_SHORTCUT_ENABLED) return;
+
     // Keyboard annotation short cut
     $(document).keypress(function(event) {
         let key_codes = range(48, 58); // key 0 to key 9
@@ -196,15 +199,14 @@ function keyboardOverride() {
 }
 
 // Submit skulpt code
-function outf(text) {
+function skulptOutput(text) {
     // let output = document.getElementById("output");
     // output.innerHTML = output.innerHTML + text;
     let output = $("pre#output");
     output.html(output.html() + text);
 }
 
-
-function builtinRead(x) {
+function skulptBuiltinRead(x) {
     if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
             throw "File not found: '" + x + "'";
     return Sk.builtinFiles["files"][x];
@@ -219,15 +221,17 @@ function runPythonCode() {
     let output = $("pre#output");
     output.html("");
     Sk.pre = "output";
-    Sk.configure({output:outf, read:builtinRead});
-    (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+    Sk.configure({output:skulptOutput, read:skulptBuiltinRead});
+    // (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
     let myPromise = Sk.misceval.asyncToPromise(function() {
        return Sk.importMainWithBody("<stdin>", false, code, true);
     });
     myPromise.then(function(mod) {
        console.log('success');
     },
-       function(err) {
-       console.log(err.toString());
+        function(err) {
+            if (!PYTHON_ERROR_MESSAGE_DISPLAY) return;
+            console.log(err.toString());
+            skulptOutput(err.toString());
     });
 }

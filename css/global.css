@@ -49,15 +49,25 @@ h6 {
     color: darkgreen;
 }
 
-/*div#annotation button#9 {*/
-/*    background-color: lightseagreen!important;*/
-/*    border: lightseagreen!important;*/
-/*}*/
+button#anno9 {
+    background-color: lightseagreen;
+    border: lightseagreen;
+}
 
-/*div#annotation button#0 {*/
-/*    background-color: lightsalmon!important;*/
-/*    border: lightsalmon!important;*/
-/*}*/
+button#anno9:hover {
+    background-color: #008080;
+    border: #008080;
+}
+
+button#anno0 {
+    background-color: #ff9166; /* based on lightsalmon */
+    border: #ff9166;
+}
+
+button#anno0:hover {
+    background-color: #f86859; /* based on salmon */
+    border: #f86859;
+}
 
 div#instruction {
     padding: 2px 8px 2px 8px;
@@ -87,7 +97,7 @@ div#annotation button.btn {
 
 #problem-detail, #code, #output {
     padding: 2px 8px 2px 8px;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: medium;
 }
 
