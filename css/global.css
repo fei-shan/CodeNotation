@@ -102,9 +102,16 @@ div#annotation button.btn {
 }
 
 footer {
-    height: 40px;
+    /*height: 25px;*/
     text-align: center;
-    color: lightslategray;
+    color: slategray;
+}
+
+footer div.progress,
+footer div.progress-bar {
+    height: 5px;
+    font-size: small;
+    color: #101511;
 }
 
 .notransition {

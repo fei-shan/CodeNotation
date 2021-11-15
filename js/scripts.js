@@ -125,9 +125,9 @@ function handleAnnotation(a) {
     console.log({"thought": a.text(), "content":selection.toString()});
 
     // Display toast
-    $("#toast-content .toast-body").text(a.text()
-        + ": " + selection.toString());
-    $("#toast-content #toast").show().delay(1000).fadeOut();
+    $("#toast-content .toast-body span.text-success").text(a.text() + ": ");
+    $("#toast-content .toast-body span.text-body").text(selection.toString());
+    $("#toast-content #toast").show().delay(2000).fadeOut();
 
     // Textarea remove readonly
     $("textarea#code").attr("readonly", false);
@@ -192,7 +192,8 @@ function keyboardOverride() {
             && key_codes.includes(event.keyCode)) {
             event.preventDefault();
             // Get corresponding annotation button
-            let a = $("div#annotation button#" + key_codes.indexOf(event.keyCode));
+            let a = $("div#annotation button#anno" + key_codes.indexOf(event.keyCode));
+            console.log(a.text());
             handleAnnotation(a);
         }
     });
