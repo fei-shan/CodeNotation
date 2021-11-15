@@ -168,7 +168,7 @@ function countdown(left, total) { // Recursive count in seconds
             countdown(left - 0.1, total);
         }, 100);
     } else {
-        alert("Please make an annotation to continue");
+        alert("Please make an annotation before continuing editing.");
         $("textarea#code").attr("readonly", true);
         // Restart countdown when the editor is focused
         startCountdown();
