@@ -47,7 +47,7 @@ const annotations = [
 const questions = [
     {
         "idx" : 1,
-        problem_detail: "Fibonacci's sequence is a sequence of numbers where every number is the sum of the previous two numbers. Given an integer input n, please write a function to calculate and return the nth Fibonacci number.",
+        problem_detail: "Fibonacci's sequence is a sequence of numbers where every number is the sum of the previous two numbers, starting with 0, 1, 1, ... Given an integer input n, please write a function to calculate and return the nth Fibonacci number.",
         pre_code: "# For testing your function\n" +
             "print(Fibonacci(9))",
     },
