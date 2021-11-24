@@ -29,7 +29,7 @@ body header {
     margin-bottom: 0.5rem;
 }
 
-body div#flex-content {
+body div#flex-container {
     flex: 1 1 auto;
 }
 
@@ -79,7 +79,7 @@ div#instruction p {
 }
 
 textarea#code {
-    white-space: pre-wrap;
+    white-space: pre;
 }
 
 div#problem-detail {
@@ -112,6 +112,21 @@ footer div.progress-bar {
     height: 5px;
     font-size: small;
     color: #101511;
+}
+
+ul.messages, div.alert {
+    /*font-weight: bold;*/
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #934952;
+}
+
+ul.messages li.warning {
+    /*color: white;*/
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .notransition {

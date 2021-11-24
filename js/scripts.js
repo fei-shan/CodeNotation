@@ -3,54 +3,61 @@ const PYTHON_ERROR_MESSAGE_DISPLAY = true;
 
 const annotations = [
     {
-        "id": 1,
+        "idx": 1,
         "thought": "This must be correct",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 2,
+        "idx": 2,
         "thought": "This should be used",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 3,
+        "idx": 3,
         "thought": "It worth a try",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 4,
+        "idx": 4,
         "thought": "Looking up/into it",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 5,
+        "idx": 5,
         "thought": "Testing it",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 6,
-        "thought": "Stuck on this",
-        "class": "btn btn-success w-100",
+        "idx": 6,
+        "thought": "Stuck on this/Debugging",
     },
     {
-        "id": 7,
-        "thought": "What should I do now?",
-        "class": "btn btn-success w-100",
+        "idx": 7,
+        "thought": "This could be wrong",
     },
     {
-        "id": 8,
+        "idx": 8,
         "thought": "Other",
-        "class": "btn btn-success w-100",
     },
     {
-        "id": 9,
+        "idx": 9,
         "thought": "Feeling good",
-        "class": "btn btn-success w-50",
     },
     {
-        "id": 0,
+        "idx": 0,
         "thought": "Feeling bad",
-        "class": "btn btn-success w-50",
+    }
+];
+
+const questions = [
+    {
+        "idx" : 1,
+        problem_detail: "Fibonacci's sequence is a sequence of numbers where every number is the sum of the previous two numbers. Given an integer input n, please write a function to calculate and return the nth Fibonacci number.",
+        pre_code: "# For testing your function\n" +
+            "print(Fibonacci(9))",
+    },
+    {
+        "idx" : 2,
+        problem_detail: "Write a function called count_capital_consonants. This function should take as input a string, and return as output a single integer. The number the function returns should be the count of characters from the string that were capital consonants. For this problem, consider Y a consonant.",
+        pre_code: "# For testing your function\n" +
+            "print(count_capital_consonants(\"Georgia Tech\"))\n" +
+            "print(count_capital_consonants(\"GEORGIA TECH\"))\n" +
+            "print(count_capital_consonants(\"gEOrgIA tEch\"))",
     }
 ];
 
@@ -58,6 +65,7 @@ var annotation_time_total = 40;
 var annotation_time_left = annotation_time_total;
 
 $(document).ready(function (){
+    randomQuestion();
     displayAnnotation();
     getSelection();
     startCountdown();
@@ -67,9 +75,15 @@ $(document).ready(function (){
 });
 
 function closeToast() {
-    $("#toast-content .btn-close").click(function (){
-        $("#toast-content #toast").hide();
+    $("#toast-container .btn-close").click(function (){
+        $("#toast-container #toast").hide();
     })
+}
+
+function randomQuestion() {
+    const q = questions[Math.floor(Math.random()*questions.length)];
+    $("div#problem-detail p").text("Problem " + q.idx + ": " + q.problem_detail);
+    $("textarea#code").text(q.pre_code);
 }
 
 // Style each annotation button
@@ -87,10 +101,12 @@ function closeToast() {
 
 // Display annotation button options.
 function displayAnnotation() {
+    const button_class_100 = "btn btn-success w-100";
+    const button_class_50 = "btn btn-success w-50";
     for (const a of annotations) {
-        $("#annotation").append("<button id=\"anno"+ a.id +
-                "\" class = \"" + a.class + "\">" +
-            a.id + ". " + a.thought +
+        $("#annotation").append("<button id=\"anno"+ a.idx + "\" class = \"" +
+            ((a.idx === 9 || a.idx === 0)?button_class_50:button_class_100) +
+            "\">" + a.idx + ". " + a.thought +
             "</button>");
         // styleAnnotation(a);
     }
@@ -125,9 +141,9 @@ function handleAnnotation(a) {
     console.log({"thought": a.text(), "content":selection.toString()});
 
     // Display toast
-    $("#toast-content .toast-body span.text-success").text(a.text() + ": ");
-    $("#toast-content .toast-body span.text-body").text(selection.toString());
-    $("#toast-content #toast").show().delay(2000).fadeOut();
+    $("#toast-container .toast-body span.text-success").text(a.text() + ": ");
+    $("#toast-container .toast-body span.text-body").text(selection.toString());
+    $("#toast-container #toast").show().delay(2000).fadeOut();
 
     // Textarea remove readonly
     $("textarea#code").attr("readonly", false);
@@ -144,6 +160,10 @@ function makeAnnotation() {
         // Get corresponding annotation button
         let a = $(this);
         handleAnnotation(a);
+
+        // Remove potential warning messages.
+        // $("ul.messages").remove();
+        $(".alert").alert('close');
     });
 }
 
@@ -168,7 +188,9 @@ function countdown(left, total) { // Recursive count in seconds
             countdown(left - 0.1, total);
         }, 100);
     } else {
-        alert("Please make an annotation before continuing editing.");
+        let warning = "Please make an annotation before continuing editing.";
+        warningPrompt([warning]);
+        // alert(warning);
         $("textarea#code").attr("readonly", true);
         // Restart countdown when the editor is focused
         startCountdown();
@@ -188,7 +210,18 @@ function keyboardOverride() {
     // Keyboard annotation short cut
     $(document).keypress(function(event) {
         let key_codes = range(48, 58); // key 0 to key 9
-        if((event.metaKey || event.ctrlKey)
+        // if(key_codes.includes(event.keyCode)) {
+        //     if (event.altKey) {
+        //         event.preventDefault();
+        //         // event.preventDefault();
+        //         // Get corresponding annotation button
+        //         let a = $("div#annotation button#anno" + key_codes.indexOf(event.keyCode));
+        //         console.log(a.text());
+        //         handleAnnotation(a);
+        //     }
+        // }
+
+        if((event.altKey || event.ctrlKey)
             && key_codes.includes(event.keyCode)) {
             event.preventDefault();
             // Get corresponding annotation button
@@ -235,4 +268,16 @@ function runPythonCode() {
             console.log(err.toString());
             skulptOutput(err.toString());
     });
+}
+
+function warningPrompt(messages) {
+    $("html, body").scrollTop(0);
+    // $("<ul class=\"messages\"><li class=\"warning\">" + messages + "</li></ul>").insertBefore($("div#header")).delay(5000).fadeOut("slow");
+    // $("ul.messages").remove();
+    // $("<ul class=\"messages\"></ul>").insertBefore($("body header"));
+    // for (let message of messages) {
+    //     $("ul.messages").append("<li class=\"warning\">" + message + "</li>");
+    // }
+    $(".alert").alert('close');
+    $("<div class=\"alert alert-danger\" role=\"alert\">" + messages + "</div>").insertBefore($("body header"));
 }
