@@ -61,7 +61,7 @@ const questions = [
     }
 ];
 
-var annotation_time_total = 40;
+var annotation_time_total = 60;
 var annotation_time_left = annotation_time_total;
 
 $(document).ready(function (){
