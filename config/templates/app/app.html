@@ -60,6 +60,7 @@
                             <div id="editor-field" class="h-75">
                                 <h6>Code Editor</h6>
                                 <form class="col-sm-11">
+                                    {%csrf_token%}
 <!--                                    <textarea id="code" class="border border-success rounded-3 h-100 col-sm-12">print("Hello, world!")</textarea>-->
                                     <textarea id="code" class="border border-success rounded-3 h-100 col-sm-12"></textarea>
                                     <div class="d-flex justify-content-end">
