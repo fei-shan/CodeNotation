@@ -82,7 +82,7 @@ textarea#code {
     white-space: pre;
 }
 
-div#problem-detail {
+div#question-detail {
     height: 100px;
 }
 
@@ -95,7 +95,7 @@ div#annotation button.btn {
     /*border: 0;*/
 }
 
-#problem-detail, #code, #output {
+#question-detail, #code, #output {
     padding: 2px 8px 2px 8px;
     font-family: Arial, sans-serif;
     font-size: medium;

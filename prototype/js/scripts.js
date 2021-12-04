@@ -47,7 +47,7 @@ const annotations = [
 const questions = [
     {
         "idx" : 1,
-        problem_detail: "Fibonacci's sequence is a sequence of numbers where every number is the sum of the previous two numbers, starting with 0, 1, 1, ... Given an integer input n, please write a function to calculate and return the nth Fibonacci number.",
+        question_detail: "Fibonacci's sequence is a sequence of numbers where every number is the sum of the previous two numbers, starting with 0, 1, 1, ... Given an integer input n, please write a function to calculate and return the nth Fibonacci number.",
         pre_code: "#For testing your function\n" +
             "print(Fibonacci(1)) #0\n" +
             "print(Fibonacci(4)) #2\n" +
@@ -55,7 +55,7 @@ const questions = [
     },
     {
         "idx" : 2,
-        problem_detail: "Write a function called count_capital_consonants. This function should take as input a string, and return as output a single integer. The number the function returns should be the count of characters from the string that were capital consonants. For this problem, consider Y a consonant.",
+        question_detail: "Write a function called count_capital_consonants. This function should take as input a string, and return as output a single integer. The number the function returns should be the count of characters from the string that were capital consonants. For this problem, consider Y a consonant.",
         pre_code: "#For testing your function\n" +
             "print(count_capital_consonants(\"Georgia Tech\")) #2\n" +
             "print(count_capital_consonants(\"GEORGIA TECH\")) #6\n" +
@@ -84,7 +84,7 @@ function closeToast() {
 
 function randomQuestion() {
     const q = questions[Math.floor(Math.random()*questions.length)];
-    $("div#problem-detail p").text("Problem " + q.idx + ": " + q.problem_detail);
+    $("div#question-detail p").text("Problem " + q.idx + ": " + q.question_detail);
     $("textarea#code").text(q.pre_code);
 }
 

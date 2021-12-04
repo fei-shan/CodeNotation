@@ -1,0 +1,141 @@
+/* Created by Fei Shan */
+
+/*div {*/
+/*  border: 1px solid;*/
+/*}*/
+
+/*body div.col-sm-6 {*/
+/*    background-color: darkseagreen;*/
+/*}*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body div#full-height {
+    display: flex;
+    flex-direction: column;
+    max-width: 992px;
+}
+
+body header {
+    margin-bottom: 0.5rem;
+}
+
+body div#flex-container {
+    flex: 1 1 auto;
+}
+
+nav.navbar {
+    padding-bottom: 0;
+}
+
+div.row {
+    margin: 0 0 20px 0;
+}
+
+div.row>div {
+    padding-left: 0;
+}
+
+h6 {
+    color: darkgreen;
+}
+
+button#anno9 {
+    background-color: lightseagreen;
+    border: lightseagreen;
+}
+
+button#anno9:hover {
+    background-color: #008080;
+    border: #008080;
+}
+
+button#anno0 {
+    background-color: #ff9166; /* based on lightsalmon */
+    border: #ff9166;
+}
+
+button#anno0:hover {
+    background-color: #f86859; /* based on salmon */
+    border: #f86859;
+}
+
+div#instruction {
+    padding: 2px 8px 2px 8px;
+}
+
+div#instruction p {
+    font-family: "Times New Roman", Times, serif;
+    color: dimgray;
+}
+
+textarea#code {
+    white-space: pre;
+}
+
+div#question-detail {
+    height: 100px;
+}
+
+div#editor-field form {
+    height: 85%;
+}
+
+div#annotation button.btn {
+    margin: 0 0 5px 0;
+    /*border: 0;*/
+}
+
+#question-detail, #code, #output {
+    padding: 2px 8px 2px 8px;
+    font-family: Arial, sans-serif;
+    font-size: medium;
+}
+
+footer {
+    /*height: 25px;*/
+    text-align: center;
+    color: slategray;
+}
+
+footer div.progress,
+footer div.progress-bar {
+    height: 5px;
+    font-size: small;
+    color: #101511;
+}
+
+ul.messages, div.alert {
+    /*font-weight: bold;*/
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #934952;
+}
+
+ul.messages li.warning {
+    /*color: white;*/
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.notransition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
+    transform: translateZ(0) !important; /*Force reflow*/
+}
+
+
