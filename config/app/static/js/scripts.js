@@ -179,6 +179,10 @@ function startCountdown () {
 function handleAnnotation(a) {
     console.log({"annotation": a.text(), "selection":selection.toString()});
 
+    // Remove potential warning messages.
+    // $("ul.messages").remove();
+    $(".alert").alert('close');
+
     // Send to server
     const csrftoken = getCookie('csrftoken');
     const question_id = $('#question-detail').attr("data-question-id");
@@ -232,10 +236,6 @@ function makeAnnotation() {
         // Get corresponding annotation button
         let a = $(this);
         handleAnnotation(a);
-
-        // Remove potential warning messages.
-        $("ul.messages").remove();
-        $(".alert").alert('close');
     });
 }
 
