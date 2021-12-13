@@ -1,0 +1,29 @@
+﻿"annotations", "preference"
+"This should be used",-6
+"It worth a try",-5
+"This Must be correct",-3
+"Feeling bad",-3
+"Feeling good",-2
+"Looking up/into it",-1
+"Testing it",-1
+"Stuck on this/debugging",-1
+"This could be wrong",-1
+"I don't fully understand the question/problem text",1
+"I'm stuck",1
+"This is easy",1
+"I need help",1
+"I can do this",1
+"This should have worked",1
+"Does python require type definition for function variable declaration?",1
+"Why can't I remember this?",1
+"Ask a friend?",1
+"Thinking...",1
+"Refer class XX function XX",1
+"No idea",1
+"Still working",1
+"Running through a test case",1
+"Need to optimize",1
+"This is hard| This is more difficult than I thought",2
+"Naive approach first| Something inefficient that should be changed later",2
+"I have to Google it| Googling this",2
+"What is the syntax?| Trying to remember the correct syntax",2

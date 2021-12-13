@@ -14,7 +14,7 @@ html, body {
     padding: 0;
 }
 
-p {
+p, h2 {
     margin: 0;
     padding: 0;
 }
@@ -47,6 +47,10 @@ div.row>div {
 
 h6 {
     color: darkgreen;
+}
+
+#question-list h6 {
+    margin: 0;
 }
 
 button#anno9 {
@@ -84,10 +88,15 @@ textarea#code {
 
 div#question-detail {
     height: 100px;
+    overflow-y: scroll;
 }
 
 div#editor-field form {
     height: 85%;
+}
+
+div#editor-field button#code-run {
+    margin-top: 5px;
 }
 
 div#annotation button.btn {
@@ -95,10 +104,26 @@ div#annotation button.btn {
     /*border: 0;*/
 }
 
-#question-detail, #code, #output {
+#question-detail {
     padding: 2px 8px 2px 8px;
-    font-family: Arial, sans-serif;
+    /*font-family: Ubuntu, sans-serif;*/
     font-size: medium;
+}
+
+.CodeMirror {
+    font-size: .875em;
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+/*pre {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+#output {
+    padding: 2px 8px 2px 8px;
+    /*font-size: smaller;*/
 }
 
 footer {
@@ -129,6 +154,20 @@ ul.messages li.warning {
     border-color: #f5c6cb;
 }
 
+div.overflow-auto {
+    min-height: 500px;
+    max-height: 500px;
+}
+
+ul#question-list a {
+    margin: 0 0 15px 0;
+}
+
+ul#question-list div.overflow-hidden {
+    margin-left: 20px;
+    max-height: 50px;
+}
+
 .notransition {
     -webkit-transition: none !important;
     -moz-transition: none !important;
@@ -137,5 +176,6 @@ ul.messages li.warning {
     transition: none !important;
     transform: translateZ(0) !important; /*Force reflow*/
 }
+
 
 

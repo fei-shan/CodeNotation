@@ -67,7 +67,9 @@ var annotation_time_total = 60;
 var annotation_time_left = annotation_time_total;
 
 $(document).ready(function (){
-    randomQuestion();
+    // randomQuestion();
+    // leaveWarning();
+    displayCodeMirror();
     displayAnnotation();
     getSelection();
     startCountdown();
@@ -90,6 +92,24 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+function leaveWarning() {
+    if (!$("#editor-field form").length) return;
+    $(window).bind('beforeunload', function(e){
+        return true;
+    });
+
+    // $("textarea#code").data('serialize', $("textarea#code").text()); // On load save form current state
+    // console.log($("textarea#code").data('serialize'));
+    // $(window).bind('beforeunload', function(e){
+    //     if ($("textarea#code").text()!==$("textarea#code").data('serialize')) {
+    //         return true;
+    //     }
+    //     else {
+    //         e = null;
+    //     } // If form state change show warning box, else don't show it.
+    // });
 }
 
 function closeToast() {
@@ -145,7 +165,7 @@ function getSelection() {
 // Start countdown once
 var reset_time = false;
 function startCountdown () {
-    $("textarea#code").one("focus", function (event) { // Start countdown
+    $("form#editor-form").one("click", function (event) { // Start countdown
         $("div#countdown-timer div.progress-bar") // Reset to full width, then start counting down again.
             .width("100%")
             .attr("aria-valuenow", 100).hide().show(0, true, function () {
@@ -197,6 +217,8 @@ function handleAnnotation(a) {
 
     // Textarea remove readonly
     $("textarea#code").attr("readonly", false);
+    // With CodeMirror
+    if (cm) cm.setOption("readOnly", false);
     // Timer reset
     reset_time = true;
     // Stop animation for instant resetting
@@ -212,7 +234,7 @@ function makeAnnotation() {
         handleAnnotation(a);
 
         // Remove potential warning messages.
-        // $("ul.messages").remove();
+        $("ul.messages").remove();
         $(".alert").alert('close');
     });
 }
@@ -242,6 +264,8 @@ function countdown(left, total) { // Recursive count in seconds
         warningPrompt([warning]);
         // alert(warning);
         $("textarea#code").attr("readonly", true);
+        // With CodeMirror
+        if (cm) cm.setOption("readOnly", true);
         // Restart countdown when the editor is focused
         startCountdown();
     }
@@ -286,7 +310,7 @@ function keyboardOverride() {
 function skulptOutput(text) {
     // let output = document.getElementById("output");
     // output.innerHTML = output.innerHTML + text;
-    let output = $("pre#output");
+    let output = $("#output");
     output.html(output.html() + text);
 }
 
@@ -296,13 +320,24 @@ function skulptBuiltinRead(x) {
     return Sk.builtinFiles["files"][x];
 }
 
+
+// With CodeMirror
+var textarea = document.getElementById('code');
+if (textarea) var cm = CodeMirror.fromTextArea(textarea, {
+        lineNumbers: true,
+    });
+// if (cm) cm.setSize(null, null);
 // Run the code in editor
 function runPythonCode() {
     // let code = document.getElementById("code").value;
     // let output = document.getElementById("output");
     // output.innerHTML = '';
+
+    // With CodeMirror
+    if (cm) cm.save();
+
     let code = $("textarea#code").val();
-    let output = $("pre#output");
+    let output = $("#output");
     output.html("");
     Sk.pre = "output";
     Sk.configure({output:skulptOutput, read:skulptBuiltinRead});
@@ -318,6 +353,12 @@ function runPythonCode() {
             console.log(err.toString());
             skulptOutput(err.toString());
     });
+}
+
+function displayCodeMirror() {
+    if (typeof textarea !== 'undefined') {
+        $("div#editor-field .CodeMirror").addClass($("textarea#code").attr("class"));
+    }
 }
 
 function warningPrompt(messages) {

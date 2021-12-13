@@ -1,0 +1,30 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    <div class="d-flex h-100 w-100">
+{#            <div class="border border-success rounded-3 h-100 col-sm-6">#}
+{#                <h6>{{ course.code }}</h6>#}
+{#                <div></div>#}
+{#            </div>#}
+            <div class="h-100 col-sm-6">
+                <h6>Coding Problems</h6>
+                <div class="overflow-auto">
+                    <ul id="question-list" class="list-group">
+                        {% for question in question_list %}
+                            <a class="list-group-item border border-success rounded-3 h-100 list-group-item-action" href="{{ question.get_absolute_url }}">
+                                <div class="d-flex h-100 justify-content-between">
+                                    <h6>{{ question.idx }}. {{ question.title }}</h6>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <small>{{ question.content }}</small>
+                                </div>
+
+                            </a>
+                        {% empty %}
+                            <li>No question available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+    </div>
+{% endblock %}

@@ -4,5 +4,6 @@ from . import views
 app_name = 'app'
 urlpatterns = [
     path('', views.app_home, name='home'),
-    path('annotate/add', views.app_logs_add, name='log'),
+    path('questions/<int:idx>', views.app_question, name='question'),
+    path('annotate', views.app_annotate, name='annotate'),
 ]
