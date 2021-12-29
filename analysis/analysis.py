@@ -19,7 +19,7 @@ def plotly_plot(data):
                'Q10', 'Q11'  # Timer
                ]
     top_labels = ['Strongly agree', 'Agree', 'Neutral', 'Disagree',
-                  'Strongly disagree']
+                  'Strongly disagree']  # 1 - Strongly agree,  5 - Strongly disagree
     colors = ['rgba(38, 24, 74, 0.8)', 'rgba(71, 58, 131, 0.8)',
               'rgba(122, 120, 168, 0.8)', 'rgba(164, 163, 204, 0.85)',
               'rgba(190, 192, 213, 1)']
